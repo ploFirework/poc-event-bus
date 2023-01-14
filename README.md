@@ -15,6 +15,15 @@ this.$_eventBus_emit(event, callback)
 
 For Vue components, its enough to call `$_eventBus_on` to register an event, developers no longer to need to deregister this event later in the Vue lifecycle because this plugin will automatically do that.  Of course, a developer can still call `$_eventBus_off` to manually deregister their events+callback anytime they wish.
 
+All existing calls to the bus should still work:
+
+```
+this.$bus.$on(eventName{String}, callback{fn})
+this.$bus.$once(eventName{String}, callback{fn})
+this.$bus.$off(eventName{String}, callback{fn})
+this.$bus.$emit(eventName{String}, arg1, arg2, ...)
+```
+
 For everything else (ie JS classes), the event bus can be imported and invoked as today.  And just like today there will be no auto-deregister when the JS class importing the event bus is unloaded...
 
 As a vanilla JS import:
