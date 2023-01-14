@@ -1,12 +1,35 @@
 /*
-    CT-1516 - Implement of Event Bus (PubSub) in vanilla JS
+    CT-1516 - Implement Event Bus (PubSub) in vanilla JS
     - this will be used as both Vue Plugin and a plain exported JS Object 
+    - safe to migrate from Vue 2 to Vue 3
+
+    As a vanilla JS import:
+
+      import { EventBus as Bus } from './utils/EventBus.js'
+
+      Bus.$on(eventName{String}, callback{fn})
+      Bus.$once(eventName{String}, callback{fn})
+      Bus.$off(eventName{String}, callback{fn})
+      Bus.$emit(eventName{String}, arg1, arg2, ...)
+
+    As a Vue Plugin:
+
+      this.$_eventBus_on(eventName{String}, callback{fn})
+      this.$_eventBus_once(eventName{String}, callback{fn})
+      this.$_eventBus_off(eventName{String}, callback{fn})
+      this.$_eventBus_emit(eventName{String}, arg1, arg2, ...)
+
+    ** NOTE ** the plugin version will auto-magically deregister all registered events for
+    the given component in the beforeDestroy lifecycle hook, so no need to add that call
+    in your component.
     
     See https://v3-migration.vuejs.org/breaking-changes/events-api.html
 
     Vue 3 docs discourages use of Event Bus and we should strive to deprecate these as we
     evolve the application
 */
+
+// Maps of eventNames to list of callbacks
 const events = {}
 const events_once = {}
 
@@ -31,19 +54,21 @@ function $once(evt, cb) {
   events_once[evt].push(cb)
 }
 
-// Handle events
+// Trigger callbacks on events
 function $emit(evt, ...args) {
   if (Array.isArray(events[evt])) {
     events[evt].forEach((fn) => fn(...args))
   }
 
+  // After all callbacks in events_once have been called, clear them
+  // so they cannot be triggered again
   if (Array.isArray(events_once[evt])) {
     events_once[evt].forEach((fn) => fn(...args))
     delete events_once[evt]
   }
 }
 
-// Expose event bus functions to non-Vue code
+// Expose event bus functions to non-Vue code (plain JS export)
 export const EventBus = {
   $on,
   $off,
