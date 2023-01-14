@@ -1,6 +1,6 @@
 <template>
     <div style="margin:20px; padding:20px; border:solid 1px red;">
-        TestCompNotPlugin {{ title }}
+        Using vanilla JS obj {{ title }}
         <button @click="register">Register</button>
         <button @click="deregister">Deregister</button>
         <button @click="emit">Emit</button>

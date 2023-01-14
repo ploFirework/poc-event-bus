@@ -43,6 +43,7 @@ function $emit(evt, ...args) {
   }
 }
 
+// Expose event bus functions to non-Vue code
 export const EventBus = {
   $on,
   $off,
@@ -50,27 +51,41 @@ export const EventBus = {
   $emit,
 }
 
+// Expose event bus functions as Vue Plugin
+// Create a new registration method that automagically deregisters
 export default function install(Vue) {
-  // As Vue Plugin, memoize registrations in order to auto-deregister later
-  Vue.prototype.$bus = {
-    ...EventBus,
-    $on: (evt, cb) => {
-      console.log(this)
-      $on(evt, cb)
-      this.eventBus_localEventMem.push([evt, cb])
-    }
-  }
+  Vue.prototype.$bus = EventBus // For backwards compatibility 
+
   
   // As Vue Mixin, auto-deregister EventBus events on destroy
   Vue.mixin({
     data() {
       return {
-        eventBus_localEventMem: []
+        eventBus_events: [],
+        eventBus_events_once: []
+      }
+    },
+    methods: {
+      // As Vue Plugin, memoize registrations in order to auto-deregister later
+      $_eventBus_on(evt, cb) {
+        $on(evt, cb)
+        this.eventBus_events.push([evt, cb])
+      },
+      $_eventBus_off(evt, cb) {
+        $off(evt, cb)
+      },
+      $_eventBus_once(evt, cb) {
+        $once(evt, cb)
+        this.eventBus_events_once.push([evt, cb])
+      },
+      $_eventBus_emit(evt, ...args) {
+        $emit(evt, ...args)
       }
     },
     beforeDestroy() {
       //Automagically deregister 
-      this.eventBus_localEventMem.forEach(([evt, cb]) => $off(evt, cb))
+      this.eventBus_events.forEach(([evt, cb]) => $off(evt, cb))
+      this.eventBus_events_once.forEach(([evt, cb]) => $off(evt, cb))
     }
   })
 

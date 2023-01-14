@@ -29,7 +29,7 @@ export default {
   components: { TestComp, TestCompNotPlugin },
   methods: {
     testHandler() {
-      console.log('testHandler', this.n)
+      console.log('testHandler parent')
     },
     register() {
       this.$bus.$on('test', this.testHandler)

@@ -1,7 +1,8 @@
 <template>
     <div style="margin:20px; padding:20px; border:solid 1px red;">
-        TestComp {{ title }}
+        Using Vue plugin {{ title }}
         <button @click="register">Register</button>
+        <button @click="registerOnce">Register Once</button>
         <button @click="deregister">Deregister</button>
         <button @click="emit">Emit</button>
         <button @click="$emit('destroy')">Destroy Me</button>
@@ -21,13 +22,16 @@
                 console.log('testHandler', this.n)
             },
             register() {
-                this.$bus.$on('test', this.testHandler)
+                this.$_eventBus_on('test', this.testHandler)
+            },
+            registerOnce() {
+                this.$_eventBus_once('test', this.testHandler)
             },
             deregister() {
-                this.$bus.$off('test', this.testHandler)
+                this.$_eventBus_off('test', this.testHandler)
             },
             emit() {
-                this.$bus.$emit('test')
+                this.$_eventBus_emit('test')
             },
         }
         
