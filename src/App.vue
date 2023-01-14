@@ -4,8 +4,8 @@
     <button @click="register">Register</button>
     <button @click="deregister">Deregister</button>
     <button @click="emit">Emit</button>
-    <button @click="addTestComp">Add TestComp</button>
-    <button @click="addTestCompNotPlugin">Add TestCompNotPlugin</button>
+    <button @click="addTestComp">Add component that uses Plugin</button>
+    <button @click="addTestCompNotPlugin">Add component that uses plain JS import</button>
 
     <component 
       v-for="c in children" 
