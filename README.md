@@ -17,6 +17,17 @@ For Vue components, its enough to call `$_eventBus_on` to register an event, dev
 
 For everything else (ie JS classes), the event bus can be imported and invoked as today.  And just like today there will be no auto-deregister when the JS class importing the event bus is unloaded...
 
+As a vanilla JS import:
+```
+
+import { EventBus as Bus } from './utils/EventBus.js'
+
+Bus.$on(eventName{String}, callback{fn})
+Bus.$once(eventName{String}, callback{fn})
+Bus.$off(eventName{String}, callback{fn})
+Bus.$emit(eventName{String}, arg1, arg2, ...)
+```
+
 ## Running the demo
 ```
 npm run serve
