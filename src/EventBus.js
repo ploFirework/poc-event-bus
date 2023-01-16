@@ -45,12 +45,15 @@ function $on(evt, cb) {
 }
 
 // Unsubscribe to events
+// This method covers both .on and .once
 function $off(evt, cb) {
-  if (!Array.isArray(events[evt])) {
-    return
+  if (Array.isArray(events[evt])) {
+    events[evt] = events[evt].filter((fn) => fn !== cb)
   }
 
-  events[evt] = events[evt].filter((fn) => fn !== cb)
+  if (Array.isArray(events_once[evt])) {
+    events_once[evt] = events_once[evt].filter((fn) => fn !== cb)
+  }
 }
 
 // Subscribe to events that should only run once
@@ -64,7 +67,7 @@ function $once(evt, cb) {
   events_once[evt].push(cb)
 }
 
-// Trigger callbacks on events
+// Trigger callbacks on events, if there are any
 function $emit(evt, ...args) {
   if (Array.isArray(events[evt])) {
     events[evt].forEach((fn) => fn(...args))

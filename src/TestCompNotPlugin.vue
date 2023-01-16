@@ -2,6 +2,7 @@
     <div style="margin:20px; padding:20px; border:solid 1px red;">
         Using vanilla JS obj {{ title }}
         <button @click="register">Register</button>
+        <button @click="registerOnce">Register Once</button>
         <button @click="deregister">Deregister</button>
         <button @click="emit">Emit</button>
         <button @click="$emit('destroy')">Destroy Me</button>
@@ -24,6 +25,9 @@ export default {
         },
         register() {
             EventBus.$on('test', this.testHandler)
+        },
+        registerOnce() {
+            EventBus.$once('test', this.testHandler)
         },
         deregister() {
             EventBus.$off('test', this.testHandler)

@@ -2,6 +2,7 @@
   <div id="app">
     Parent
     <button @click="register">Register</button>
+    <button @click="registerOnce">Register Once</button>
     <button @click="deregister">Deregister</button>
     <button @click="emit">Emit</button>
     <button @click="addTestComp">Add component that uses Plugin</button>
@@ -35,6 +36,9 @@ export default {
     },
     register() {
       this.$bus.$on('test', this.testHandler)
+    },
+    registerOnce() {
+      this.$bus.$once('test', this.testHandler)
     },
     registerNonFunction() {
       this.$bus.$on('test', true)
