@@ -35,6 +35,11 @@ const events_once = {}
 
 // Subscribe to events
 function $on(evt, cb) {
+  if (!(cb instanceof Function)) {
+    console.warn(`EventBus: attempt register event '${evt}' with non-function '${cb}' `)
+    return
+  } 
+  
   events[evt] = events[evt] || []
   events[evt].push(cb)
 }
@@ -50,6 +55,11 @@ function $off(evt, cb) {
 
 // Subscribe to events that should only run once
 function $once(evt, cb) {
+  if (!(cb instanceof Function)) {
+    console.warn(`EventBus: attempt register once-event '${evt}' with non-function '${cb}' `)
+    return
+  }
+
   events_once[evt] = events_once[evt] || []
   events_once[evt].push(cb)
 }
@@ -80,7 +90,6 @@ export const EventBus = {
 // Create a new registration method that automagically deregisters
 export default function install(Vue) {
   Vue.prototype.$bus = EventBus // For backwards compatibility 
-
   
   // As Vue Mixin, auto-deregister EventBus events on destroy
   Vue.mixin({

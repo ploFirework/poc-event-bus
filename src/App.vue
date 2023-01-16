@@ -7,6 +7,8 @@
     <button @click="addTestComp">Add component that uses Plugin</button>
     <button @click="addTestCompNotPlugin">Add component that uses plain JS import</button>
 
+    <button @click="registerNonFunction">Register Non Function</button>
+
     <component 
       v-for="c in children" 
       :is="c[0] === 'tc' ? 'TestComp' : 'TestCompNotPlugin'" 
@@ -33,6 +35,9 @@ export default {
     },
     register() {
       this.$bus.$on('test', this.testHandler)
+    },
+    registerNonFunction() {
+      this.$bus.$on('test', true)
     },
     deregister() {
       this.$bus.$off('test', this.testHandler)

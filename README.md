@@ -7,6 +7,7 @@ Proof of Concept for stand-alone Event Bus (basic vanilla JS PubSub implementati
 When running the test application, the `EventBus` is installed as a global Vue plugin that exposes the following on the application instance:
 
 ```
+# NEW
 this.$_eventBus_on(event, callback)
 this.$_eventBus_off(event, callback)
 this.$_eventBus_once(event, callback)
@@ -18,6 +19,7 @@ For Vue components, its enough to call `$_eventBus_on` to register an event, dev
 All existing calls to the bus should still work:
 
 ```
+# OLD
 this.$bus.$on(eventName{String}, callback{fn})
 this.$bus.$once(eventName{String}, callback{fn})
 this.$bus.$off(eventName{String}, callback{fn})
@@ -28,7 +30,7 @@ For everything else (ie JS classes), the event bus can be imported and invoked a
 
 As a vanilla JS import:
 ```
-
+# UNCHANGED
 import { EventBus as Bus } from './utils/EventBus.js'
 
 Bus.$on(eventName{String}, callback{fn})
