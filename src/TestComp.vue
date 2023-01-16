@@ -12,14 +12,9 @@
 <script>
     export default {
         props: ['title'],
-        data() {
-            return {
-                n: this.title
-            }
-        },
         methods: {
             testHandler() {
-                console.log('testHandler', this.n)
+                console.log('testHandler', this.title)
             },
             register() {
                 this.$_eventBus_on('test', this.testHandler)

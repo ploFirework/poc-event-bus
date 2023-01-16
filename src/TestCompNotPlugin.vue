@@ -14,14 +14,9 @@ import { EventBus } from './EventBus'
 
 export default {
     props: ['title'],
-    data() {
-        return {
-            n: this.title
-        }
-    },
     methods: {
         testHandler() {
-            console.log('testHandler', this.n)
+            console.log('testHandler', this.title)
         },
         register() {
             EventBus.$on('test', this.testHandler)

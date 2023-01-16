@@ -36,7 +36,7 @@ const events_once = {}
 // Subscribe to events
 function $on(evt, cb) {
   if (!(cb instanceof Function)) {
-    console.warn(`EventBus: attempt register event '${evt}' with non-function '${cb}' `)
+    console.warn(`EventBus: attempt to register event '${evt}' with non-function '${cb}' `)
     return
   } 
   
@@ -59,7 +59,7 @@ function $off(evt, cb) {
 // Subscribe to events that should only run once
 function $once(evt, cb) {
   if (!(cb instanceof Function)) {
-    console.warn(`EventBus: attempt register once-event '${evt}' with non-function '${cb}' `)
+    console.warn(`EventBus: attempt to register once-event '${evt}' with non-function '${cb}' `)
     return
   }
 
