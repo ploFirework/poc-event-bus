@@ -6,6 +6,7 @@
         <button @click="deregister">Deregister</button>
         <button @click="emit">Emit</button>
         <button @click="$emit('destroy')">Destroy Me</button>
+        I will NOT self-deregister because I'm using plain JS import (no lifecycle hook)
     </div>
 </template>
 

@@ -6,6 +6,7 @@
         <button @click="deregister">Deregister</button>
         <button @click="emit">Emit</button>
         <button @click="$emit('destroy')">Destroy Me</button>
+        I will self-deregister, because I'm using Vue plugin
     </div>
 </template>
 
